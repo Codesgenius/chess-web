@@ -58,7 +58,7 @@ const Chess = () => {
       </div>
       <div className="player-con">
         <h1 className="player-name">Human VS Human</h1>
-        <p style={{ color: "blue" }}><a href="#">Play with Computer?</a></p>
+        <p style={{ color: "blue" }}><span>Play with Computer?</span></p>
       </div>
      </div>
       <div className={`main-container ${rotate ? 'rotate-con' : ''}`}>

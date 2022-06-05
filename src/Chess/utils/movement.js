@@ -40,63 +40,49 @@ const checkDown = (x, y, toX, allPieces) => {
 }
 
 const checkTopLeft = (x, y, toX, toY, allPieces) => {
-    let [i, j] = [x-1, y-1];
-    while(i > toX && j > toY){
+    for(let i = x-1, j = y-1; i > toX && j > toY; i--, j--){
         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
         if(obstacle.type !== 'empty'){
             return false;
         }
-        i--;
-        j--;
     }
     return true;
 }
 
 const checkTopRight = (x, y, toX, toY, allPieces) => {
-    let [i, j] = [x-1, y+1];
-    while(i > toX && j < toY){
+    for(let i = x-1, j = y+1; i > toX && j < toY; i--, j++){
         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
         if(obstacle.type !== 'empty'){
             return false;
         }
-        i--;
-        j++;
     }
     return true;
 }
 
 const checkBottomLeft = (x, y, toX, toY, allPieces) => {
-    let [i, j] = [x+1, y-1];
-    while(i < toX && j > toY){
+    for(let i = x+1, j = y-1; i < toX && j > toY; i++, j--){
         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
         if(obstacle.type !== 'empty'){
             return false;
         }
-        i++;
-        j--;
     }
     return true;
 }
 
 const checkBottomRight = (x, y, toX, toY, allPieces) => {
-    let [i, j] = [x+1, y+1];
-    while(i < toX && j < toY){
+    for(let i = x+1, j = y+1; i < toX && j < toY; i++, j++){
         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
         if(obstacle.type !== 'empty'){
             return false;
         }
-
-        i++;
-        j++;
     }
     return true;
 }
 
 const rightMoves = (from, color, allPieces) => {
-    let [x, y] = from;
-    y++;
+    let x = from[0]
     const moves = [];
-    while(y < 8){
+    for(let y = from[1]+1; y < 8; y++){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -105,16 +91,14 @@ const rightMoves = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        y++;
     }
     return moves;
 }
 
 const leftMove = (from, color, allPieces) => {
-    let [x, y] = from;
-    y--;
+    let x = from[0];
     const moves = [];
-    while(y >= 0){
+    for(let y = from[1]-1; y >= 0; y--){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -123,16 +107,14 @@ const leftMove = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        y--;
     }
     return moves;
 }
 
 const topMoves = (from, color, allPieces) => {
-    let [x, y] = from;
-    x--;
+    let y = from[1];
     const moves = [];
-    while(x >= 0){
+    for(let x = from[0]-1; x >= 0; x--){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -141,16 +123,14 @@ const topMoves = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        x--;
     }
     return moves;
 }
 
 const bottomMoves = (from, color, allPieces) => {
-    let [x, y] = from;
-    x++;
+    let y = from[1];
     const moves = [];
-    while(x < 8){
+    for(let x = from[0]+1; x < 8; x++){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -159,17 +139,13 @@ const bottomMoves = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        x++;
     }
     return moves;
 }
 
 const topRightMoves = (from, color, allPieces) => {
-    let [x, y] = from;
-    x--;
-    y++;
     const moves = [];
-    while(x >= 0 && y < 8){
+    for(let x = from[0]-1, y = from[1]+1; x >= 0 && y < 8; x--, y++){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -178,18 +154,13 @@ const topRightMoves = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        x--;
-        y++;
     }
     return moves;
 }
 
 const topLeftMoves = (from, color, allPieces) => {
-    let [x, y] = from;
-    x--;
-    y--;
     const moves = [];
-    while(x >= 0 && y >= 0){
+    for(let x = from[0]-1, y = from[1]-1; x >= 0 && y >= 0; x--, y--){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -198,18 +169,13 @@ const topLeftMoves = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        x--;
-        y--;
     }
     return moves;
 }
 
 const bottomRightMoves = (from, color, allPieces) => {
-    let [x, y] = from;
-    x++;
-    y++;
     const moves = [];
-    while(x < 8 && y < 8){
+    for(let x = from[0]+1, y = from[1]+1; x < 8 && y < 8; x++, y++){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -218,18 +184,13 @@ const bottomRightMoves = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        x++;
-        y++;
     }
     return moves;
 }
 
 const bottomLeftMoves = (from, color, allPieces) => {
-    let [x, y] = from;
-    x++;
-    y--;
     const moves = [];
-    while(x < 8 && y >= 0){
+    for(let x = from[0]+1, y = from[1]-1; x < 8 && y >= 0; x++, y--){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === y)
         if(obstacle.type !== 'empty'){
             if(obstacle.color !== color){
@@ -238,8 +199,6 @@ const bottomLeftMoves = (from, color, allPieces) => {
             break
         }
         moves.push([x, y]);
-        x++;
-        y--;
     }
     return moves;
 }
