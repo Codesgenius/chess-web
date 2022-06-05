@@ -3,8 +3,8 @@ import {FaChessRook, FaChessBishop, FaChessKing, FaChessKnight, FaChessPawn, FaC
 import {getMoves, move} from '../utils/movement'
 import { checkForChecks, checkForMate, checkForStale } from '../utils/check'
 
-const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, pieces, setPieces, sugmoves, setSugmoves,
-     curr, setCurr, setCheckColor, checkColor, allmoves, setAllmoves, lastmove, setLastmove, rotate}) => {
+const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, pieces, setPieces, sugmoves, setSugmoves, setMyres,
+     curr, setCurr, setCheckColor, checkColor, allmoves, setAllmoves, lastmove, setLastmove, rotate, setIsOpen, crown, setCrown}) => {
     const {id, type, color, position} = item
 
     const renderIcon = () => {
@@ -26,7 +26,16 @@ const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, p
         }
     }
 
+    const pawnIsCrowning = () => {
+        const {type} = pieces[selected]
+        if (type === 'pawn' && (position[0] === 0 || position[0] === 7)) {
+            return true
+        }
+        return false
+    }
+
     const handleClick = () => {
+        console.log(position);
         if(color === player){
             setSugmoves(getMoves(item, pieces))
         }
@@ -39,9 +48,14 @@ const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, p
                 let oldCheck = checkColor
 
                 if(move(curItem.type, curItem.color, curItem.position, pieces[id].position, newPieces, lastmove)) {
+                    if(pawnIsCrowning()){
+                        setIsOpen(true)
+                        setMyres({selected, position, item})
+                        return 
+                    }
+
                     newPieces[id] = {...newPieces[id], color : newPieces[selected].color, type: newPieces[selected].type}
                     newPieces[selected] = {...newPieces[selected], color: undefined, type: 'empty', moved: true}
-
                     setPieces(newPieces)
                     setSelected(null)
                     setCurr(id)

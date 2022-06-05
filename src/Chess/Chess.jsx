@@ -1,5 +1,6 @@
 import React, {useState, useRef} from 'react'
 import {FaForward, FaBackward, FaPlay} from 'react-icons/fa'
+import Modal from './components/Modal'
 import Piece from './components/Piece'
 import useClickOutside from './hooks/useClickOutside'
 import './style.css'
@@ -9,6 +10,9 @@ const Chess = () => {
   const wrapperRef = useRef(null);
   useClickOutside(wrapperRef, () => setSelected(null));
 
+  const [myres, setMyres] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [crown, setCrown] = useState(null)
   const [rotate, setRotate] = useState(false)
   const [player, setPlayer] = useState('white')
   const [selected, setSelected] = useState(null)
@@ -20,14 +24,14 @@ const Chess = () => {
   const [lastmove, setLastmove] = useState(null)
   const [allmoves, setAllmoves] = useState([allPieces])
 
-  console.log(rotate)
-
-  const states = {selected, setSelected, player, setPlayer, allmoves, setAllmoves, lastmove, setLastmove,
-    pieces, setPieces, prev, setPrev, curr, setCurr, checkColor, setCheckColor, sugmoves, setSugmoves, rotate}
+  const states = {selected, setSelected, player, setPlayer, allmoves, setAllmoves, lastmove, setLastmove, setIsOpen, myres, setMyres,
+    pieces, setPieces, prev, setPrev, curr, setCurr, checkColor, setCheckColor, sugmoves, setSugmoves, rotate, crown, setCrown}
+  const modalStates = {isOpen, setIsOpen, crown, setCrown, myres, setMyres, pieces, setPieces,
+    setSelected, setCurr, setPrev, setPlayer, setCheckColor, setSugmoves, setLastmove, player, checkColor}
 
   return (
     <div className='wrapper'>
-
+      <Modal {...modalStates}/>
      <div className="left-pane">
      <div className="player-con">
         <h1 className="player-name">{player} to play</h1>

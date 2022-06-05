@@ -27,6 +27,9 @@ export const checkForChecks = (allPieces, cb, mate) => {
 
     blackPieces.forEach(piece => {
         const moves = getMoves(piece, allPieces);
+        if(piece.type === "king" && piece.color === "black"){
+            console.log({moves})
+        }
         moves.forEach(move => {
             const [newX, newY] = move;
             const newPosition = [newX, newY];
