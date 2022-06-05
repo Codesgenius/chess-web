@@ -1,0 +1,123 @@
+.wrapper {
+  background-color: rgb(36, 34, 34);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.np {
+  display: flex;
+  padding: 10px;
+  justify-content: space-evenly;
+}
+.fb {
+  font-size: 1.5em;
+  padding: 3px;
+  background-color: blue;
+  border-radius: 5px;
+  color: snow;
+}
+.play {
+  font-size: 1.5em;
+  color: green;
+  padding: 3px;
+  border-radius: 5px;
+}
+.main-container {
+  min-width: 430px;
+  padding: 30px;
+  transition: all 1s ease;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.info-container {
+  background-color: rgb(231, 207, 207);
+  padding: 30px;
+  border-radius: 10px;
+}
+  
+.player-con {
+  padding: 10px;
+  font-weight: bold;
+  color: snow;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.info-con {
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-top: 10px;
+  color: aliceblue;
+  background-color: #f32121;
+  border-radius: 15px;
+  font-weight: bold;
+  transition: all .5s ease;
+}
+.info-con:hover {
+  background-color: rgb(143, 24, 8);
+}
+
+.rotate {
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  background-color: #2196F3;
+  border-radius: 15px;
+  transition: all .5s ease;
+}
+.rotate:hover {
+  background-color: rgb(6, 13, 112);
+  color: snow;
+}
+
+.grid-item {
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 30px;
+  text-align: center;
+}
+
+.rotate-con {
+  transform: rotate(180deg);
+  transform-origin: center; 
+}
+
+.dark-square {
+  background-color: #8f5118;
+}
+
+.light-square {
+  background-color: rgb(230, 183, 136);
+}
+
+.piece-con {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected-con, .curr-con {
+  background-color: rgb(159, 226, 72);
+}
+.prev-con {
+  background-color: rgb(222, 241, 133);
+}
+
+.check-con {
+  background-color: rgb(255, 0, 0);
+}
+
+.sug-con {
+  background-color: rgb(106, 243, 174);
+}
