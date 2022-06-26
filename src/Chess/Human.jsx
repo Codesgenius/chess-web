@@ -34,7 +34,6 @@ const Human = ({socket}) => {
 
   useEffect(() => {
     socket.on("played", ({pieces}) => {
-      // if(room === user.room && sender !== user.name){
         setPieces(pieces)
         setToplay(true)
         setPlayer(user.color)
@@ -57,7 +56,6 @@ const Human = ({socket}) => {
                 alert("Stalemate")
             }, 100)
         }
-      // }
     })
   }, [setPieces, setPlayer, setToplay])
 
