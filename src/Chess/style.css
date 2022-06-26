@@ -8,19 +8,39 @@ body{
   padding: 5px;
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .modal-icons {
+  cursor: pointer;
   padding: 10px;
-  margin: 0 5px;
+  margin: 5px;
   background-color: rgba(224, 219, 219, 0.5);
   border-radius: 10px;
   font-size: 60px;
+  max-width: 350px;
   transition: all .5s ease;
+  text-align: center;
 }
 .modal-icons:hover {
   background-color: #2196F3;
 }
+
+.modal-button {
+  margin: 0 auto;
+  background-color: red;
+  color: snow;
+  padding: 10px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  border: 2px solid rgb(235, 184, 184);
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
 .wrapper {
   width: 100vw;
   height: 100vh;
@@ -29,6 +49,57 @@ body{
   align-items: center;
   flex-wrap: wrap;
 }
+.heading {
+  color: snow;
+  text-align: center;
+}
+
+.joinInput{
+  padding: 10px;
+  outline: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.user-msg {
+  font-size: 1.2rem;
+  color: snow;
+}
+.join-btn {
+  display: block;
+  padding: 10px;
+  outline: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 22px;
+  background-color: green;
+}
+.games {
+  background-color: blue;
+  margin: 5px 10px;
+  border-radius: 10px;
+  padding: 10px;
+  color: snow;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.an {
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: darkblue;
+}
+.an:hover {
+  color: blue;
+}
+.sr {
+  color: white;
+  background-color: gray;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
 
 .np {
   display: flex;
@@ -36,17 +107,19 @@ body{
   justify-content: space-evenly;
 }
 .fb {
-  font-size: 1.5em;
-  padding: 3px;
+  font-size: 2.5em;
+  padding: 8px;
   background-color: blue;
   border-radius: 5px;
   color: snow;
+  margin: 0 10px;
 }
 .play {
-  font-size: 1.5em;
+  font-size: 2.5em;
   color: green;
-  padding: 3px;
+  padding: 8px;
   border-radius: 5px;
+  margin: 0 10px;
 }
 .main-container {
   transition: all 1s ease;

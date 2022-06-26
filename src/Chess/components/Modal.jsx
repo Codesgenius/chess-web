@@ -14,8 +14,6 @@ const customStyles = {
   },
 };
 
-ReactModal.setAppElement('#root');
-
 const Modal = ({isOpen, setIsOpen, myres, pieces, checkColor, setPieces,setSelected, player, setCurr, setPrev, setPlayer, setCheckColor, setSugmoves, setLastmove }) => {
     const resolveCrown = (choice) => {
         if(!myres)

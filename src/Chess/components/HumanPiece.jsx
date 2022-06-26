@@ -3,8 +3,8 @@ import {FaChessRook, FaChessBishop, FaChessKing, FaChessKnight, FaChessPawn, FaC
 import {getMoves, move} from '../utils/movement'
 import { checkForChecks, checkForMate, checkForStale } from '../utils/check'
 
-const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, pieces, setPieces, sugmoves, setSugmoves, setMyres,
-     curr, setCurr, setCheckColor, checkColor, allmoves, setAllmoves, lastmove, setLastmove, rotate, setIsOpen, analysis, crown, setCrown}) => {
+const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSelected, prev, setPrev, pieces, setPieces, sugmoves, setSugmoves, setMyres,
+     curr, setCurr, setCheckColor, checkColor,socket, allmoves, setAllmoves, lastmove, setLastmove, rotate, setIsOpen, analysis,room, sender, crown, setCrown}) => {
     const {id, type, color, position} = item
 
     const renderIcon = () => {
@@ -35,8 +35,12 @@ const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, p
     }
 
     const handleClick = () => {
+        if(!toplay){
+            return
+        }
+
         if(color === player){
-            setSugmoves(getMoves(item, pieces, lastmove))
+            setSugmoves(getMoves(item, pieces, lastmove, false))
         }
         if(selected !== null) {
             if(color !== player) {
@@ -45,6 +49,7 @@ const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, p
                 let oldPieces = [...pieces]
                 let oldPlayer = player
                 let oldCheck = checkColor
+                let went = true
 
                 if(move(curItem, pieces[id].position, newPieces, lastmove)) {
                     if(pawnIsCrowning()){
@@ -65,6 +70,7 @@ const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, p
                     checkForChecks(newPieces, (checkColor) => {
                         setCheckColor(checkColor)
                         if(checkColor === player) {
+                            went = false
                             setCheckColor(oldCheck)
                             setPieces(oldPieces)
                             setPlayer(oldPlayer)
@@ -86,6 +92,16 @@ const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, p
                         setTimeout(()=> {
                             alert("Stalemate")
                         }, 100)
+                    }
+
+
+                    if(went){
+                        setToplay(false)
+                        socket.emit("play", {pieces: newPieces, room}, (error) => {
+                            if(error) {
+                                alert(error);
+                            }
+                        })
                     }
 
                     setSugmoves([])
@@ -127,4 +143,4 @@ const Piece = ({item, player, setPlayer, selected, setSelected, prev, setPrev, p
   )
 }
 
-export default Piece
+export default HumanPiece

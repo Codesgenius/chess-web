@@ -6,7 +6,7 @@ import Piece from './components/Piece'
 import useClickOutside from './hooks/useClickOutside'
 import { squares, pieces as allPieces } from './utils/pieces'
 
-const Chess = () => {
+const Computer = () => {
   const wrapperRef = useRef(null);
   useClickOutside(wrapperRef, () => setSelected(null));
 
@@ -91,4 +91,4 @@ const Chess = () => {
   )
 }
 
-export default Chess
+export default Computer

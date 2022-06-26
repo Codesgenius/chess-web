@@ -5,7 +5,7 @@ export const checkForChecks = (allPieces, cb, mate) => {
     const blackPieces = allPieces.filter(piece => piece.color === 'black');
 
     whitePieces.forEach(piece => {
-        const moves = getMoves(piece, allPieces);
+        const moves = getMoves(piece, [...allPieces]);
         moves.forEach(move => {
             const [newX, newY] = move;
             const newPosition = [newX, newY];
@@ -13,23 +13,13 @@ export const checkForChecks = (allPieces, cb, mate) => {
             if (newPiece && newPiece.color === 'black') {
                 if (newPiece.type === 'king') {
                     cb('black');
-                    // return {
-                    //     id: piece.id,
-                    //     type: piece.type,
-                    //     color: piece.color,
-                    //     position: piece.position,
-                    //     check: true,
-                    // }
                 }
             }
         })
     })
 
     blackPieces.forEach(piece => {
-        const moves = getMoves(piece, allPieces);
-        if(piece.type === "king" && piece.color === "black"){
-            console.log({moves})
-        }
+        const moves = getMoves(piece, [...allPieces]);
         moves.forEach(move => {
             const [newX, newY] = move;
             const newPosition = [newX, newY];
@@ -37,13 +27,6 @@ export const checkForChecks = (allPieces, cb, mate) => {
             if (newPiece && newPiece.color === 'white') {
                 if (newPiece.type === 'king') {
                     cb('white');
-                    // return {
-                    //     id: piece.id,
-                    //     type: piece.type,
-                    //     color: piece.color,
-                    //     position: piece.position,
-                    //     check: true,
-                    // }
                 }
             }
         })
@@ -55,7 +38,7 @@ export const checkForMate = (allPieces, color) => {
     const colorPieces = allPieces.filter(p => p.color === color)
 
     for(const piece of colorPieces) {
-        const moves = getMoves(piece, allPieces);
+        const moves = getMoves(piece, [...allPieces]);
 
         for(const move of moves) {       
             const testPieces = [...allPieces]
@@ -94,12 +77,12 @@ export const checkForStale = (allPieces, color) => {
     const king = allPieces.filter(p => p.color === color && p.type === "king")[0]
 
     for(const piece of colorPieces) {
-        if(getMoves(piece, allPieces).length > 0){
+        if(getMoves(piece, [...allPieces]).length > 0){
             return false
         }
     }
 
-    const moves = getMoves(king, allPieces);
+    const moves = getMoves(king, [...allPieces]);
     console.log({moves, color, king})
 
     for(const move of moves) {       
