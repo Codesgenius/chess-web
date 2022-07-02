@@ -1,6 +1,6 @@
 import { getMoves } from "./movement";
 
-export const checkForChecks = (allPieces, cb, mate) => {
+export const checkForChecks = (allPieces, cb) => {
     const whitePieces = allPieces.filter(piece => piece.color === 'white');
     const blackPieces = allPieces.filter(piece => piece.color === 'black');
 
@@ -32,6 +32,24 @@ export const checkForChecks = (allPieces, cb, mate) => {
         })
     })    
 }
+
+export const checkDanger = (allPieces, oColor, positions = []) => {
+    const enemyPieces = allPieces.filter(piece => piece.color === oColor && piece.type !== 'king');
+
+    for(const enemyPiece of enemyPieces) {
+        const moves = getMoves(enemyPiece, [...allPieces]);
+        for(const move of moves) {
+            const [newX, newY] = move;
+            const newPosition = [newX, newY];
+            
+            if(positions.find((pos) => pos.join("") === newPosition.join(""))){
+                return true;
+            }
+        }
+    }
+    return false
+}
+
 
 export const checkForMate = (allPieces, color) => {
     const oppColor = color === "white" ?  "black" : "white"

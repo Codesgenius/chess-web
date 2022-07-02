@@ -1,6 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useLocation } from 'react-router-dom'
-import {io} from 'socket.io-client'
 import Analysis from './Analysis'
 import Modal from './components/Modal'
 import Piece from './components/HumanPiece'
@@ -27,8 +26,10 @@ const Human = ({socket}) => {
   const [pieces, setPieces] = useState(allPieces)
   const [curr, setCurr] = useState(null)
   const [checkColor, setCheckColor] = useState(null)
+  const [gamestat, setGamestat] = useState(null)
   const [sugmoves, setSugmoves] = useState([])
   const [lastmove, setLastmove] = useState(null)
+  const [gameover, setGameover] = useState(false)
   const [isAOpen, setIsAOpen] = useState(false)
   const [allmoves, setAllmoves] = useState([{state: allPieces, analysis: {checkColor, prev, curr}}])
 
@@ -37,33 +38,39 @@ const Human = ({socket}) => {
         setPieces(pieces)
         setToplay(true)
         setPlayer(user.color)
+        setCheckColor(null)
 
         const newPieces = [...pieces]
+        let newCheckColor = null
         checkForChecks(newPieces, (checkColor) => {
+            newCheckColor = checkColor
             setCheckColor(checkColor)
 
             if(checkColor){
                 if(checkForMate(newPieces, checkColor)){
-                    setTimeout(()=> {
-                        alert(`Checkmate for ${checkColor === 'white' ? 'black' : 'white'}`)
-                    }, 100)
+                  setGameover(true)
+                  setGamestat("checkmate")
+                  console.log(`Checkmate for ${checkColor === 'white' ? 'black' : 'white'}`)
                 }
             }
         })
 
         if(checkForStale(newPieces, user.color === 'white' ? 'black' : 'white')){
-            setTimeout(()=> {
-                alert("Stalemate")
-            }, 100)
+          setGameover(true)
+          setGamestat("Stalemate")
+          console.log("Stalemate")
         }
-    })
-  }, [setPieces, setPlayer, setToplay])
 
-  const states = {selected, setSelected, player, setPlayer, allmoves, setAllmoves, lastmove,toplay, setToplay, setLastmove, setIsOpen, myres, setMyres,
+        setAllmoves([...allmoves, {state: pieces, analysis: {checkColor: newCheckColor, prev, curr}}])
+    })
+  }, [setPieces, setPlayer, setToplay,setAllmoves, setCheckColor, setGameover, allmoves, checkColor, prev, curr, gameover, setGamestat])
+
+  const states = {selected, setSelected, player, setPlayer, allmoves, setAllmoves, lastmove,toplay, setToplay, setLastmove, setIsOpen, myres, setMyres, gameover, setGameover,
     pieces, setPieces, prev, setPrev, curr, setCurr, checkColor, setCheckColor, sugmoves, setSugmoves, rotate, crown, setCrown, socket, room: user.room, sender: user.name}
   const modalStates = {isOpen, setIsOpen, crown, setCrown, myres, setMyres, pieces, setPieces,
     setSelected, setCurr, setPrev, setPlayer, setCheckColor, setSugmoves, setLastmove, player, checkColor}
   const analysisStates = {isAOpen, setIsAOpen, allmoves}
+
 
   return (
     <div className='wrapper'>
@@ -78,17 +85,17 @@ const Human = ({socket}) => {
 
         <div className="info-container">
           <div className="info-con" onClick={() => {
-            setPieces(allPieces)
-            setPlayer('white')
-            setCurr(null)
-            setPrev(null)
-            setSelected(null)
-            setCheckColor(null)
-            setAllmoves([{state: allPieces, analysis: {checkColor, prev, curr}}])
-            setLastmove(null)
-            setSugmoves([])
+            // setPieces(allPieces)
+            // setPlayer('white')
+            // setCurr(null)
+            // setPrev(null)
+            // setSelected(null)
+            // setCheckColor(null)
+            // setAllmoves([{state: allPieces, analysis: {checkColor, prev, curr}}])
+            // setLastmove(null)
+            // setSugmoves([])
             }}>
-            <h2>Restart</h2>
+            <h2>Resign</h2>
           </div>
 
           <div className="rotate" onClick={() => {setRotate(!rotate)}}>
@@ -96,7 +103,7 @@ const Human = ({socket}) => {
           </div>
 
           <div className="np">
-            {/* <div className="an" onClick={() => {setIsAOpen(true)}}>Analyse</div> */}
+            {gameover && <div className="an" onClick={() => {setIsAOpen(true)}}>Analyse</div>}
             <div className="human-box">
                <h2 className='sr' onClick={() => {}}>{`You are ${user?.color}`}</h2>
             </div>

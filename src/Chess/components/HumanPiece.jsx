@@ -3,7 +3,7 @@ import {FaChessRook, FaChessBishop, FaChessKing, FaChessKnight, FaChessPawn, FaC
 import {getMoves, move} from '../utils/movement'
 import { checkForChecks, checkForMate, checkForStale } from '../utils/check'
 
-const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSelected, prev, setPrev, pieces, setPieces, sugmoves, setSugmoves, setMyres,
+const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSelected, prev, setPrev, pieces, setPieces, sugmoves, setSugmoves, setMyres,gameover,setGameover,
      curr, setCurr, setCheckColor, checkColor,socket, allmoves, setAllmoves, lastmove, setLastmove, rotate, setIsOpen, analysis,room, sender, crown, setCrown}) => {
     const {id, type, color, position} = item
 
@@ -49,6 +49,7 @@ const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSe
                 let oldPieces = [...pieces]
                 let oldPlayer = player
                 let oldCheck = checkColor
+                let newCheckColor = null
                 let went = true
 
                 if(move(curItem, pieces[id].position, newPieces, lastmove)) {
@@ -80,8 +81,10 @@ const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSe
                         }
 
                         if(checkColor){
+                            newCheckColor = checkColor
                             if(checkForMate(newPieces, checkColor)){
                                 setTimeout(()=> {
+                                    setGameover(true)
                                     alert(`Checkmate for ${checkColor === 'white' ? 'black' : 'white'}`)
                                 }, 100)
                             }
@@ -90,6 +93,7 @@ const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSe
 
                     if(checkForStale(newPieces, player === 'white' ? 'black' : 'white')){
                         setTimeout(()=> {
+                            setGameover(true)
                             alert("Stalemate")
                         }, 100)
                     }
@@ -97,6 +101,7 @@ const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSe
 
                     if(went){
                         setToplay(false)
+                        setAllmoves([...allmoves, {state: newPieces, analysis: {newCheckColor, prev, curr}}])
                         socket.emit("play", {pieces: newPieces, room}, (error) => {
                             if(error) {
                                 alert(error);
@@ -110,7 +115,6 @@ const HumanPiece = ({item, player, setPlayer, toplay, setToplay, selected, setSe
                         span: Math.abs(position[0] - newPieces[selected].position[0]),
 
                     })
-                    setAllmoves([...allmoves, {state: newPieces, analysis: {checkColor, prev, curr}}])
                     return
                 }
                 return console.log("invalid move")

@@ -1,3 +1,5 @@
+import { checkDanger } from "./check";
+
 const checkLeft = (x, y, toY, allPieces) => {
     for(let i = y-1; i > toY; i--){
         const obstacle = allPieces.find(piece => piece.position[0] === x && piece.position[1] === i)
@@ -226,35 +228,43 @@ const knightMoves = (from, color, allPieces) => {
 
 const kingMoves = (from, color, allPieces, ready) => {
     let [x, y] = from
+    const oColor = color === 'white' ? 'black' : 'white'
     const moves = []
     let pX = [-1, 0, 1]
     let pY = [-1, 0, 1]
     let yR = y+2
     let yL = y-2
 
+    //castle
     if(yR <= 7 && checkRight(x, y, yR+1, allPieces)
         && !allPieces.find(item => item.position[0] === x && item.position[1] === yR+1).moved
         && !allPieces.find(item => item.position[0] === x && item.position[1] === y).moved){
 
-        if(ready){
-            const rook = allPieces.find(item => item.position[0] === x && item.position[1] === yR+1)
-            const space = allPieces.find(item => item.position[0] === x && item.position[1] === y+1)
-            allPieces[space.id] = {...allPieces[space.id], color : rook.color, type: rook.type}
-            allPieces[rook.id] = {...allPieces[rook.id], color: undefined, type: 'empty', moved: true}
+        if(!checkDanger(allPieces, oColor, [[x, y], [x, y+1], [x, y+2]])){
+            if(ready){
+                const rook = allPieces.find(item => item.position[0] === x && item.position[1] === yR+1)
+                const space = allPieces.find(item => item.position[0] === x && item.position[1] === y+1)
+                allPieces[space.id] = {...allPieces[space.id], color : rook.color, type: rook.type}
+                allPieces[rook.id] = {...allPieces[rook.id], color: undefined, type: 'empty', moved: true}
+            }
+            moves.push([x, yR])
         }
-        moves.push([x, yR])
     }
 
+    //castle
     if(yL >= 0 && checkLeft(x, y, yL-2, allPieces)
         && !allPieces.find(item => item.position[0] === x && item.position[1] === yL-2).moved
         && !allPieces.find(item => item.position[0] === x && item.position[1] === y).moved){
-        if(ready){
-            const rook = allPieces.find(item => item.position[0] === x && item.position[1] === yL-2)
-            const space = allPieces.find(item => item.position[0] === x && item.position[1] === y-1)
-            allPieces[space.id] = {...allPieces[space.id], color : rook.color, type: rook.type}
-            allPieces[rook.id] = {...allPieces[rook.id], color: undefined, type: 'empty', moved: true}
+
+        if(!checkDanger(allPieces, oColor, [[x, y], [x, y-1], [x, y-2]])){
+            if(ready){
+                const rook = allPieces.find(item => item.position[0] === x && item.position[1] === yL-2)
+                const space = allPieces.find(item => item.position[0] === x && item.position[1] === y-1)
+                allPieces[space.id] = {...allPieces[space.id], color : rook.color, type: rook.type}
+                allPieces[rook.id] = {...allPieces[rook.id], color: undefined, type: 'empty', moved: true}
+            }
+            moves.push([x, yL])
         }
-        moves.push([x, yL])
     }
 
 
