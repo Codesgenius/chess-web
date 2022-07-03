@@ -8,7 +8,8 @@ import Join from './Chess/Join';
 import Computer from './Chess/Computer';
 import './Chess/style.css'
 
-const socket = io(`http://${window.location.hostname}:8000`)
+// const socket = io(`http://${window.location.hostname}:8000`)
+const socket = io(`https://chessonweb.herokuapp.com`)
 
 function App() {
   return (
