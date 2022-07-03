@@ -8,7 +8,7 @@ const Join = ({socket}) => {
     const [rooms, setRooms] = useState([])
     const [status, setStatus] = useState("normal")
     const [name, setName] = useState('user'+Math.floor(200+ Math.random()*10000));
-    const [user, setUser] = useState({})
+    // const [user, setUser] = useState({})
 
     useEffect( () =>  {
         socket.on("joined", ({user, room}) => {
@@ -25,12 +25,13 @@ const Join = ({socket}) => {
             setRooms(games)
         })
         
-    },[])
+    },[name, navigate, socket])
   
     return (
         <div className="joinOuterContainer">
             <div className="joinInnerContainer">
                 <h1 className="heading">Join</h1>
+                <p>{rooms && `${rooms.length} available games`}</p>
 
                 {/* <div>
                     {rooms.map((item, index) => {
@@ -58,6 +59,7 @@ const Join = ({socket}) => {
                                     alert(error);
                                 }
                             })
+                            setName(name)
                             setStatus("searching")
                         }}
                         type="submit">Search game

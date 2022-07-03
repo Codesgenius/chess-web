@@ -20,65 +20,65 @@ const checkRight = (x, y, toY, allPieces) => {
     return true;
 }
 
-const checkUp = (x, y, toX, allPieces) => {
-    for(let i = x-1; i > toX; i--){
-        const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === y)
-        if(obstacle.type !== 'empty'){
-            return false;
-        }
-    }
-    return true;
-}
+// const checkUp = (x, y, toX, allPieces) => {
+//     for(let i = x-1; i > toX; i--){
+//         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === y)
+//         if(obstacle.type !== 'empty'){
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
-const checkDown = (x, y, toX, allPieces) => {
-    for(let i = x+1; i < toX; i++){
-        const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === y)
-        if(obstacle.type !== 'empty'){
-            return false;
-        }
-    }
-    return true;
-}
+// const checkDown = (x, y, toX, allPieces) => {
+//     for(let i = x+1; i < toX; i++){
+//         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === y)
+//         if(obstacle.type !== 'empty'){
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
-const checkTopLeft = (x, y, toX, toY, allPieces) => {
-    for(let i = x-1, j = y-1; i > toX && j > toY; i--, j--){
-        const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
-        if(obstacle.type !== 'empty'){
-            return false;
-        }
-    }
-    return true;
-}
+// const checkTopLeft = (x, y, toX, toY, allPieces) => {
+//     for(let i = x-1, j = y-1; i > toX && j > toY; i--, j--){
+//         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
+//         if(obstacle.type !== 'empty'){
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
-const checkTopRight = (x, y, toX, toY, allPieces) => {
-    for(let i = x-1, j = y+1; i > toX && j < toY; i--, j++){
-        const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
-        if(obstacle.type !== 'empty'){
-            return false;
-        }
-    }
-    return true;
-}
+// const checkTopRight = (x, y, toX, toY, allPieces) => {
+//     for(let i = x-1, j = y+1; i > toX && j < toY; i--, j++){
+//         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
+//         if(obstacle.type !== 'empty'){
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
-const checkBottomLeft = (x, y, toX, toY, allPieces) => {
-    for(let i = x+1, j = y-1; i < toX && j > toY; i++, j--){
-        const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
-        if(obstacle.type !== 'empty'){
-            return false;
-        }
-    }
-    return true;
-}
+// const checkBottomLeft = (x, y, toX, toY, allPieces) => {
+//     for(let i = x+1, j = y-1; i < toX && j > toY; i++, j--){
+//         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
+//         if(obstacle.type !== 'empty'){
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
-const checkBottomRight = (x, y, toX, toY, allPieces) => {
-    for(let i = x+1, j = y+1; i < toX && j < toY; i++, j++){
-        const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
-        if(obstacle.type !== 'empty'){
-            return false;
-        }
-    }
-    return true;
-}
+// const checkBottomRight = (x, y, toX, toY, allPieces) => {
+//     for(let i = x+1, j = y+1; i < toX && j < toY; i++, j++){
+//         const obstacle = allPieces.find(piece => piece.position[0] === i && piece.position[1] === j)
+//         if(obstacle.type !== 'empty'){
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
 const rightMoves = (from, color, allPieces) => {
     let x = from[0]

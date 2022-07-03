@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react'
-import {FaForward, FaBackward, FaPlay} from 'react-icons/fa'
+// import {FaForward, FaBackward, FaPlay} from 'react-icons/fa'
 import Analysis from './Analysis'
 import Modal from './components/Modal'
 import Piece from './components/Piece'
