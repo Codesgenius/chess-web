@@ -14,7 +14,7 @@ const Human = ({socket}) => {
   useClickOutside(wrapperRef, () => setSelected(null));
 
   const [mode, setMode] = useState('human')
-  const [searchHuman, setSearchHuman] = useState('search')
+  // const [searchHuman, setSearchHuman] = useState('search')
   const [myres, setMyres] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
   const [crown, setCrown] = useState(null)
@@ -26,7 +26,7 @@ const Human = ({socket}) => {
   const [pieces, setPieces] = useState(allPieces)
   const [curr, setCurr] = useState(null)
   const [checkColor, setCheckColor] = useState(null)
-  const [gamestat, setGamestat] = useState(null)
+  // const [gamestat, setGamestat] = useState(null)
   const [sugmoves, setSugmoves] = useState([])
   const [lastmove, setLastmove] = useState(null)
   const [gameover, setGameover] = useState(false)
@@ -48,22 +48,22 @@ const Human = ({socket}) => {
 
             if(checkColor){
                 if(checkForMate(newPieces, checkColor)){
-                  setGameover(true)
-                  setGamestat("checkmate")
+                  // setGameover(true)
+                  // setGamestat("checkmate")
                   console.log(`Checkmate for ${checkColor === 'white' ? 'black' : 'white'}`)
                 }
             }
         })
 
         if(checkForStale(newPieces, user.color === 'white' ? 'black' : 'white')){
-          setGameover(true)
-          setGamestat("Stalemate")
+          // setGameover(true)
+          // setGamestat("Stalemate")
           console.log("Stalemate")
         }
 
         setAllmoves([...allmoves, {state: pieces, analysis: {checkColor: newCheckColor, prev, curr}}])
     })
-  }, [setPieces, setPlayer, setToplay,setAllmoves, setCheckColor, setGameover, allmoves, checkColor, prev, curr, gameover, setGamestat])
+  }, [setPieces, setPlayer, setToplay,setAllmoves, setCheckColor, setGameover, allmoves, checkColor, prev, curr, gameover, socket, user.color])
 
   const states = {selected, setSelected, player, setPlayer, allmoves, setAllmoves, lastmove,toplay, setToplay, setLastmove, setIsOpen, myres, setMyres, gameover, setGameover,
     pieces, setPieces, prev, setPrev, curr, setCurr, checkColor, setCheckColor, sugmoves, setSugmoves, rotate, crown, setCrown, socket, room: user.room, sender: user.name}
