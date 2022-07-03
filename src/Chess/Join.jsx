@@ -31,7 +31,7 @@ const Join = ({socket}) => {
         <div className="joinOuterContainer">
             <div className="joinInnerContainer">
                 <h1 className="heading">Join</h1>
-                <p>{rooms && `${rooms.length} available games`}</p>
+                <p style={{ color: "blue" }}>{rooms && `${rooms.length} available games`}</p>
 
                 {/* <div>
                     {rooms.map((item, index) => {
