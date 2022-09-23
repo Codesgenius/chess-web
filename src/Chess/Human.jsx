@@ -6,6 +6,9 @@ import Piece from './components/HumanPiece'
 import useClickOutside from './hooks/useClickOutside'
 import { squares, pieces as allPieces } from './utils/pieces'
 import { checkForChecks, checkForMate, checkForStale } from './utils/check'
+import { VscChromeClose } from "react-icons/vsc";
+import { BiRotateRight } from "react-icons/bi";
+import {GiChessKnight} from 'react-icons/gi'
 
 const Human = ({socket}) => {
   const location = useLocation()
@@ -76,12 +79,21 @@ const Human = ({socket}) => {
     <div className='wrapper'>
       <Modal {...modalStates}/>
       <Analysis {...analysisStates} states={states} />
+
+      <div className="floating-logo">
+      <div className="logo">
+          <h2>
+            <GiChessKnight /> Chess World
+          </h2>
+          <i>@_chessworld</i>
+        </div>
+      </div>
       
 
      <div className="left-pane">
-      <div className="player-con">
+      {/* <div className="player-con">
           <h1 className="player-name">{player} to play</h1>
-        </div>
+        </div> */}
 
         <div className="info-container">
           <div className="info-con" onClick={() => {
@@ -94,6 +106,9 @@ const Human = ({socket}) => {
             // setAllmoves([{state: allPieces, analysis: {checkColor, prev, curr}}])
             // setLastmove(null)
             // setSugmoves([])
+            if(window.confirm("Are you sure?")){
+              window.alert(`${user.color === 'white' ? 'black' : 'white'} won by resignation`)
+            }
             }}>
             <h2>Resign</h2>
           </div>
@@ -102,12 +117,12 @@ const Human = ({socket}) => {
             <h2>Rotate</h2>
           </div>
 
-          <div className="np">
+          {/* <div className="np">
             {gameover && <div className="an" onClick={() => {setIsAOpen(true)}}>Analyse</div>}
             <div className="human-box">
                <h2 className='sr' onClick={() => {}}>{`You are ${user?.color}`}</h2>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="player-con">
           <h1 className="player-name">human VS {mode}</h1>
@@ -123,6 +138,42 @@ const Human = ({socket}) => {
                 </div>
               ))}
           </div>
+      </div>
+
+      <div className="down-pane">
+        <div
+          className="d-info-con"
+          onClick={() => {
+            if (window.confirm("Are you sure?")) {
+              setPieces(allPieces);
+              setPlayer("white");
+              setCurr(null);
+              setPrev(null);
+              setSelected(null);
+              setCheckColor(null);
+              setAllmoves([
+                { state: allPieces, analysis: { checkColor, prev, curr } },
+              ]);
+              setLastmove(null);
+              setSugmoves([]);
+            }
+          }}
+        >
+          <div>
+            <VscChromeClose />
+          </div>
+        </div>
+
+        <div
+          className="d-rotate"
+          onClick={() => {
+            setRotate(!rotate);
+          }}
+        >
+          <div>
+            <BiRotateRight />
+          </div>
+        </div>
       </div>
     </div>
   )

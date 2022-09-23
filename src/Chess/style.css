@@ -1,29 +1,69 @@
-*{
+* {
   box-sizing: border-box;
 }
-body{
-  background-color: rgb(36, 34, 34);
+body {
+  background-color: rgb(0, 0, 0);
+}
+.main-wrapper {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.logo {
+  color: white;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.logo h2 {
+  margin: 0;
+}
+.logo i {
+  color: gold;
 }
 .modal-content {
-  padding: 5px;
+  padding: 10px;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .modal-icons {
   cursor: pointer;
   padding: 10px;
-  margin: 5px;
-  background-color: rgba(224, 219, 219, 0.5);
+  background-color: rgba(80, 77, 77, 0.5);
+  color: white;
   border-radius: 10px;
-  font-size: 60px;
-  max-width: 350px;
-  transition: all .5s ease;
+  font-size: 30px;
+  flex: 1;
+  width: 180px;
+  transition: background-color 0.5s ease;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .modal-icons {
+    flex: none;
+    width: calc(50% - 5px);
+  }
+}
+
+@media (max-width: 475px) {
+  .modal-content {
+    width: 100%;
+    flex-direction: column;
+  }
+  .modal-icons {
+    flex: 1;
+    width: 100%;
+  }
+}
 .modal-icons:hover {
-  background-color: #2196F3;
+  background-color: #073963;
 }
 
 .modal-button {
@@ -48,13 +88,74 @@ body{
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
+  position: relative;
 }
 .heading {
   color: snow;
   text-align: center;
 }
 
-.joinInput{
+/* Join */
+
+.join-outer-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.loading-wrapper {
+  height: 200px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cl-a {
+  animation: toggle-view 2s ease 0s infinite;
+}
+.cl-b {
+  animation: toggle-view 2s ease .2s infinite;
+}
+
+.cl-c {
+  animation: toggle-view 2s ease .4s infinite;
+}
+
+.cl-d {
+  animation: toggle-view 2s ease .6s infinite;
+}
+.cl-e {
+  animation: toggle-view 2s ease .8s infinite;
+}
+
+
+@keyframes toggle-view {
+  0%, 100% {
+    font-size: 4px;
+  }
+  50% {
+    font-size: 64px;
+  }
+}
+
+.chess-loader {
+  font-size: 4px;
+  color: gray;
+  margin-bottom: 20px;
+}
+.chess-loader-s {
+  font-size: 64px;
+  color: gray;
+  margin-bottom: 66px;
+}
+
+.joinInput {
   padding: 10px;
   outline: none;
   border-radius: 10px;
@@ -66,13 +167,20 @@ body{
   color: snow;
 }
 .join-btn {
+  margin: 0 auto;
+  cursor: pointer;
   display: block;
   padding: 10px;
   outline: none;
   border-radius: 10px;
   font-weight: bold;
   font-size: 22px;
-  background-color: green;
+  color: snow;
+  background-color: rgb(27, 9, 75);
+}
+
+.join-btn:hover {
+  background-color: rgb(30, 5, 99);
 }
 .games {
   background-color: blue;
@@ -121,6 +229,43 @@ body{
   border-radius: 5px;
   margin: 0 10px;
 }
+.down-pane {
+  display: none;
+  margin-top: 20px;
+  font-size: 30px;
+}
+.d-info-con {
+padding: 6px 7px 5px 7px;
+background-color: #690b0b;
+border-radius: 5px;
+margin: 0 5px;
+color: snow;
+cursor: pointer;
+}
+.d-rotate {
+  padding: 6px 7px 5px 7px;
+  background-color: #073963;
+  border-radius: 5px;
+  margin: 0 5px;
+  color: snow;
+  cursor: pointer;
+}
+
+.floating-logo {
+  position: absolute;
+  top: 0;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .left-pane {
+    display: none;
+  }
+
+  .down-pane {
+    display: flex;
+  }
+}
 .main-container {
   transition: all 1s ease;
 }
@@ -128,16 +273,16 @@ body{
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto;
-  background-color: #2196F3;
+  background-color: gray;
   padding: 10px;
 }
 
 .info-container {
-  background-color: rgb(231, 207, 207);
+  background-color: gray;
   padding: 30px;
   border-radius: 10px;
 }
-  
+
 .player-con {
   padding: 10px;
   font-weight: bold;
@@ -151,10 +296,10 @@ body{
   padding: 10px 20px;
   margin-top: 10px;
   color: aliceblue;
-  background-color: #f32121;
+  background-color: #690b0b;
   border-radius: 15px;
   font-weight: bold;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 .info-con:hover {
   background-color: rgb(143, 24, 8);
@@ -165,13 +310,13 @@ body{
   margin-top: 10px;
   padding: 10px 20px;
   font-weight: bold;
-  background-color: #2196F3;
+  color: snow;
+  background-color: rgb(6, 13, 112);
   border-radius: 15px;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 .rotate:hover {
-  background-color: rgb(6, 13, 112);
-  color: snow;
+  background-color: rgb(16, 24, 136);
 }
 
 .grid-item {
@@ -182,7 +327,7 @@ body{
 
 .rotate-con {
   transform: rotate(180deg);
-  transform-origin: center; 
+  transform-origin: center;
 }
 
 .dark-square {
@@ -201,7 +346,8 @@ body{
   align-items: center;
 }
 
-.selected-con, .curr-con {
+.selected-con,
+.curr-con {
   background-color: rgb(159, 226, 72);
 }
 .prev-con {
@@ -219,7 +365,7 @@ body{
 @media (max-width: 768px) {
   .wrapper {
     width: 100%;
-    height: 100%;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -228,7 +374,7 @@ body{
 }
 
 @media (max-width: 425px) {
-  .main-container{
+  .main-container {
     padding: 10px;
   }
   .grid-item {
