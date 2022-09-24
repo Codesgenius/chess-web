@@ -12,8 +12,8 @@ const Chess = () => {
   const wrapperRef = useRef(null);
   useClickOutside(wrapperRef, () => setSelected(null));
 
-  const [mode, setMode] = useState("human");
-  const [searchHuman, setSearchHuman] = useState("search");
+  const [mode] = useState("human");
+  // const [searchHuman, setSearchHuman] = useState("search");
   const [myres, setMyres] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [crown, setCrown] = useState(null);
