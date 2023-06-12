@@ -35,7 +35,7 @@ const Choice = () => {
         </div>
         <div
           className="modal-icons"
-          //   onClick={() => navigate("/online/humanvshuman")}
+          onClick={() => navigate("/local/humanvscomputer")}
         >
           <p>
             Play <br /> Computer
@@ -44,7 +44,7 @@ const Choice = () => {
         </div>
         <div
           className="modal-icons"
-          //   onClick={() => navigate("/local/humanvscomputer")}
+          // onClick={() => navigate("/local/humanvscomputer")}
         >
           <p>
             Chess <br /> Puzzles

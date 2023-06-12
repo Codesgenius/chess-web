@@ -8,6 +8,8 @@ import { squares, pieces as allPieces } from "./utils/pieces";
 import { VscChromeClose } from "react-icons/vsc";
 import { BiRotateRight } from "react-icons/bi";
 import { GiChessKnight } from "react-icons/gi";
+import { getMoves, move } from "./utils/movement";
+import { checkForChecks, checkForMate, checkForStale } from "./utils/check";
 const Chess = () => {
   const wrapperRef = useRef(null);
   useClickOutside(wrapperRef, () => setSelected(null));
@@ -31,31 +33,117 @@ const Chess = () => {
     { state: allPieces, analysis: { checkColor, prev, curr } },
   ]);
 
+  const pawnIsCrowning = (piece) => {
+    const { type, position } = piece;
+    if (type === "pawn" && (position[0] === 0 || position[0] === 7)) {
+      return true;
+    }
+    return false;
+  };
+
+  const userMove = (pieceId) => {
+    const clickedPiece = pieces[pieceId];
+    const { id, color, position } = clickedPiece;
+
+    if (color === player) {
+      setSugmoves(getMoves(clickedPiece, pieces, lastmove));
+    }
+    if (selected !== null) {
+      if (color !== player) {
+        const curItem = pieces[selected];
+        let newPieces = [...pieces];
+        let oldPieces = [...pieces];
+        let oldPlayer = player;
+        let oldCheck = checkColor;
+
+        if (move(curItem, pieces[id].position, newPieces, lastmove)) {
+          if (pawnIsCrowning(clickedPiece)) {
+            setIsOpen(true);
+            setMyres({ selected, position, clickedPiece });
+            return;
+          }
+
+          newPieces[id] = {
+            ...newPieces[id],
+            color: newPieces[selected].color,
+            type: newPieces[selected].type,
+          };
+          newPieces[selected] = {
+            ...newPieces[selected],
+            color: undefined,
+            type: "empty",
+            moved: true,
+          };
+          setPieces(newPieces);
+          setSelected(null);
+          setCurr(id);
+          setPrev(selected);
+          setPlayer(player === "white" ? "black" : "white");
+          setCheckColor(null);
+
+          checkForChecks(newPieces, (checkColor) => {
+            setCheckColor(checkColor);
+            if (checkColor === player) {
+              setCheckColor(oldCheck);
+              setPieces(oldPieces);
+              setPlayer(oldPlayer);
+              setSelected(null);
+              setPrev(null);
+              setCurr(null);
+            }
+
+            if (checkColor) {
+              if (checkForMate(newPieces, checkColor)) {
+                setTimeout(() => {
+                  alert(
+                    `Checkmate for ${
+                      checkColor === "white" ? "black" : "white"
+                    }`
+                  );
+                }, 100);
+              }
+            }
+          });
+
+          if (
+            checkForStale(newPieces, player === "white" ? "black" : "white")
+          ) {
+            setTimeout(() => {
+              alert("Stalemate");
+            }, 100);
+          }
+
+          setSugmoves([]);
+          setLastmove({
+            ...newPieces[id],
+            span: Math.abs(position[0] - newPieces[selected].position[0]),
+          });
+          setAllmoves([
+            ...allmoves,
+            { state: newPieces, analysis: { checkColor, prev, curr } },
+          ]);
+          return;
+        }
+        return console.log("invalid move");
+      }
+    }
+
+    if (color && player === color) {
+      setSelected(id);
+    }
+    setPrev(null);
+    setCurr(null);
+  };
+
   const states = {
     selected,
-    setSelected,
-    player,
-    setPlayer,
-    allmoves,
-    setAllmoves,
-    lastmove,
-    setLastmove,
-    setIsOpen,
-    myres,
-    setMyres,
-    pieces,
-    setPieces,
     prev,
-    setPrev,
-    curr,
-    setCurr,
-    checkColor,
-    setCheckColor,
     sugmoves,
-    setSugmoves,
+    curr,
+    checkColor,
     rotate,
-    crown,
-    setCrown,
+    //   makeMove,
+    userMove,
   };
   const modalStates = {
     isOpen,
