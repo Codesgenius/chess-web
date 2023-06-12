@@ -113,7 +113,10 @@ const Computer = () => {
             let { from, to } = strToMove(res["pv"][0]);
             compMove(from, to);
           })
-          .catch((err) => console.log("Double error"));
+          .catch((err) => {
+            console.log("Double error");
+            alert("Chess engine trial ended, thanks for trying");
+          });
       });
 
     return () => {};
