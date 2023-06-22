@@ -1,2 +1,3 @@
 import {io} from 'socket.io-client'
+// export const socket = io(`http://${window.location.hostname}:8000`)
 export const socket = io(`http://${window.location.hostname}:8000`)
